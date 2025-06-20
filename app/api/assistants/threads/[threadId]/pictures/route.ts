@@ -1,8 +1,6 @@
 import {assistantId} from "@/app/assistant-config";
 import {openai} from "@/app/openai";
-
-const superCache = new Map();
-const isProcessing = new Map();
+import {superCache, isProcessing} from "@/app/utils/supercache";
 
 export const runtime = "nodejs";
 
@@ -10,6 +8,7 @@ export const runtime = "nodejs";
 export async function GET(request, {params: {threadId}}) {
     const byteCache = superCache.get(threadId);
     if (byteCache) {
+        console.log('Hit byteCache');
         return new Response(byteCache, {
             headers: {
                 "Content-Type": "image/png",
@@ -20,6 +19,7 @@ export async function GET(request, {params: {threadId}}) {
 
     const isThreadProcessing = isProcessing.get(threadId);
     if (isThreadProcessing) {
+        console.log('returned null -> processing')
         return null;
     }
     isProcessing.set(threadId, true);
