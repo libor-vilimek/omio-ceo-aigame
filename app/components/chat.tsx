@@ -303,7 +303,7 @@ const Chat = ({
                     Send
                 </button>
             </form>
-            {(messages.length >= 5 && !imageGenerated) && (
+            {(false && messages.length >= 5 && !imageGenerated) && (
                 <div>
                     <form
                         onSubmit={handleImageSubmit}

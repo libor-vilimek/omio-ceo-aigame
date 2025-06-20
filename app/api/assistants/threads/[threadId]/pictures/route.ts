@@ -6,6 +6,11 @@ export const runtime = "nodejs";
 
 // Send a new message to a thread
 export async function GET(request, {params: {threadId}}) {
+    return new Response();
+
+    superCache.forEach((key) => console.log(`Cache key: ${key}`));
+    isProcessing.forEach((key) => console.log(`Processing key: ${key}`));
+
     const byteCache = superCache.get(threadId);
     if (byteCache) {
         console.log('Hit byteCache');
@@ -20,7 +25,7 @@ export async function GET(request, {params: {threadId}}) {
     const isThreadProcessing = isProcessing.get(threadId);
     if (isThreadProcessing) {
         console.log('returned null -> processing')
-        return null;
+        return new Response();
     }
     isProcessing.set(threadId, true);
 
