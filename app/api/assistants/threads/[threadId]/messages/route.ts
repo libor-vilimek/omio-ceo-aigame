@@ -44,6 +44,7 @@ REMEMBER to recount the expenses (through number of employees and fix prics) and
 `;
 
 setTimeout(async () => {
+  return;
   if (assistantId) {
     openai.beta.assistants.update(
         assistantId, {
