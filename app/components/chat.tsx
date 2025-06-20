@@ -295,7 +295,7 @@ const Chat = ({
                         type="submit"
                         className={styles.button}
                     >
-                        Generate image
+                        Generate Image Badge about how long you survived
                     </button>
                 </form>
             </div>
