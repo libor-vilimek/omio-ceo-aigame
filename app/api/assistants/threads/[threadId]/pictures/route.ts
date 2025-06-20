@@ -7,10 +7,6 @@ export const runtime = "nodejs";
 
 // Send a new message to a thread
 export async function POST(request, {params: {threadId}}) {
-    const {content} = await request.json();
-
-    const prompt = 'Generate image of Omio';
-
     await openai.beta.threads.messages.create(threadId, {
         role: "assistant",
         content: "Tell me few main points that happened in this conversation. Tell how much months I survived",
