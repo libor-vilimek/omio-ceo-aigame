@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 export async function POST(request, {params: {threadId}}) {
     await openai.beta.threads.messages.create(threadId, {
         role: "assistant",
-        content: "Tell me few main points that happened in this conversation. Tell how much months I survived",
+        content: "Tell me few main points that happened in this conversation. Tell how much months I survived.",
     });
 
     const stream = openai.beta.threads.runs.stream(threadId, {
@@ -27,9 +27,7 @@ export async function POST(request, {params: {threadId}}) {
     const messages = await openai.beta.threads.messages.list(threadId);
     const lastMessage = messages.data.find(msg => msg.role === "assistant") as any;
     const summary = lastMessage?.content[0]?.text?.value || "";
-
-    console.log(summary);
-
+    
     // Use the summary to enhance the prompt
     const enhancedPrompt = `Generate funny picture. 
     Add badge "Survived for X months" -> Replace the X with number (the months survived is part of this prompt later)
