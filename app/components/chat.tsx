@@ -296,19 +296,21 @@ const Chat = ({
                     Send
                 </button>
             </form>
-            <div>
-                <form
-                    onSubmit={handleImageSubmit}
-                    className={`${styles.inputForm} ${styles.clearfix}`}
-                >
-                    <button
-                        type="submit"
-                        className={styles.button}
+            {messages.length >= 5 && (
+                <div>
+                    <form
+                        onSubmit={handleImageSubmit}
+                        className={`${styles.inputForm} ${styles.clearfix}`}
                     >
-                        Generate Image Badge about how long you survived
-                    </button>
-                </form>
-            </div>
+                        <button
+                            type="submit"
+                            className={styles.button}
+                        >
+                            Generate Image Badge about how long you survived
+                        </button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 };
