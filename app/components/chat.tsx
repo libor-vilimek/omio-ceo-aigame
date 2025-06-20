@@ -9,9 +9,14 @@ import {AssistantStreamEvent} from "openai/resources/beta/assistants/assistants"
 import {RequiredActionFunctionToolCall} from "openai/resources/beta/threads/runs/runs";
 
 type MessageProps = {
-    role: "user" | "assistant" | "code";
+    role: "user" | "assistant" | "code" | "picture";
     text: string;
 };
+
+const PictureMessage = ({text}: { text: string }) => {
+    return <img src={text}></img>;
+};
+
 
 const UserMessage = ({text}: { text: string }) => {
     return <div className={styles.userMessage}>{text}</div>;
@@ -46,6 +51,8 @@ const Message = ({role, text}: MessageProps) => {
             return <AssistantMessage text={text}/>;
         case "code":
             return <CodeMessage text={text}/>;
+        case "picture":
+            return <PictureMessage text={text}/>;
         default:
             return null;
     }
@@ -134,12 +141,14 @@ const Chat = ({
 
     const handleImageSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch(
-            `/api/assistants/threads/${threadId}/pictures`,
-            {
-                method: "GET",
-            }
-        );
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            {role: "assistant", text: 'Generating image, it will take a while, please be patient'},
+        ]);
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            {role: "picture", text: `/api/assistants/threads/${threadId}/pictures`},
+        ]);
     };
 
     /* Stream Event Handlers */
