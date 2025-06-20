@@ -1,12 +1,29 @@
 import {assistantId} from "@/app/assistant-config";
 import {openai} from "@/app/openai";
 
-import fs from "fs";
+const superCache = new Map();
+const isProcessing = new Map();
 
 export const runtime = "nodejs";
 
 // Send a new message to a thread
 export async function GET(request, {params: {threadId}}) {
+    const byteCache = superCache.get(threadId);
+    if (byteCache) {
+        return new Response(byteCache, {
+            headers: {
+                "Content-Type": "image/png",
+                "Content-Length": byteCache.length.toString(),
+            },
+        });
+    }
+
+    const isThreadProcessing = isProcessing.get(threadId);
+    if (isThreadProcessing) {
+        return null;
+    }
+    isProcessing.set(threadId, true);
+
     await openai.beta.threads.messages.create(threadId, {
         role: "assistant",
         content: "Tell me few main points that happened in this conversation. Tell how much months I survived.",
@@ -43,6 +60,9 @@ export async function GET(request, {params: {threadId}}) {
 
     const image_base64 = result.data[0].b64_json;
     const image_bytes = Buffer.from(image_base64, "base64");
+    superCache.set(threadId, image_bytes);
+
+    console.log('finished image generation');
 
     // Return the image as the response
     return new Response(image_bytes, {

@@ -150,6 +150,11 @@ const Chat = ({
             ...prevMessages,
             {role: "picture", text: `/api/assistants/threads/${threadId}/pictures`},
         ]);
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            {role: "assistant", text: `If the picture does not appear in 30 sec, go to https://omio-ceo-aigame-af5e532c47ab.herokuapp.com/api/assistants/threads/${threadId}/pictures`},
+        ]);
+
         setImageGenerated(true);
     };
 
@@ -298,7 +303,7 @@ const Chat = ({
                     Send
                 </button>
             </form>
-            {(false && messages.length >= 5 && !imageGenerated) && (
+            {(messages.length >= 5 && !imageGenerated) && (
                 <div>
                     <form
                         onSubmit={handleImageSubmit}
