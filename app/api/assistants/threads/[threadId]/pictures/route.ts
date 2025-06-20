@@ -39,7 +39,6 @@ export async function GET(request, {params: {threadId}}) {
         model: "gpt-image-1",
         prompt: enhancedPrompt,
         quality: 'high',
-        size: '1024x1024'
     });
 
     const image_base64 = result.data[0].b64_json;
