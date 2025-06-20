@@ -64,6 +64,7 @@ const Chat = ({
     const [messages, setMessages] = useState([]);
     const [inputDisabled, setInputDisabled] = useState(false);
     const [threadId, setThreadId] = useState("");
+    const [showImage, setShowImage] = useState(false);
 
     // automatically scroll to bottom of chat
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -136,7 +137,7 @@ const Chat = ({
         const response = await fetch(
             `/api/assistants/threads/${threadId}/pictures`,
             {
-                method: "POST",
+                method: "GET",
             }
         );
     };
