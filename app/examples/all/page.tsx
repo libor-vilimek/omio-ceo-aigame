@@ -41,10 +41,6 @@ const FunctionCalling = () => {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <div className={styles.column}>
-          <WeatherWidget {...weatherData} />
-          <FileViewer />
-        </div>
         <div className={styles.chatContainer}>
           <div className={styles.chat}>
             <Chat functionCallHandler={functionCallHandler} />
